@@ -62,9 +62,10 @@ pipeline {
                 sendDiscord("${DISCORD_ID}", "Dev Deploy Started")
                 echo "Setting up NFS"
                 setupOvhNfs("${STACK_NAME}")
-                setupOvhNfs("${STACK_NAME}/qbittorrent")
                 setupOvhNfs("${STACK_NAME}/download")
-                setupOvhNfs("${STACK_NAME}/rabbit")
+                setupOvhNfs("${STACK_NAME}/plex")
+                setupOvhNfs("${STACK_NAME}/qbittorrent")
+                setupOvhNfs("${STACK_NAME}/media")
                 echo "Stack Push"
                 updateCompose("${COMPOSE_FILE}", "STACK_NAME", "${STACK_NAME}")
                 stackPush("${COMPOSE_FILE}")
@@ -96,9 +97,10 @@ pipeline {
                 sendDiscord("${DISCORD_ID}", "Prod Deploy Started")
                 echo "Setting up NFS"
                 setupOvhNfs("${STACK_NAME}")
-                setupOvhNfs("${STACK_NAME}/qbittorrent")
                 setupOvhNfs("${STACK_NAME}/download")
-                setupOvhNfs("${STACK_NAME}/rabbit")
+                setupOvhNfs("${STACK_NAME}/plex")
+                setupOvhNfs("${STACK_NAME}/qbittorrent")
+                setupOvhNfs("${STACK_NAME}/media")
                 echo "Stack Push"
                 updateCompose("${COMPOSE_FILE}", "STACK_NAME", "${STACK_NAME}")
                 stackPush("${COMPOSE_FILE}")
