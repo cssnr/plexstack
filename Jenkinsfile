@@ -21,6 +21,7 @@ pipeline {
         BASE_NAME = "${GIT_ORG}-${GIT_REPO}"
         SERVICE_NAME = "${BASE_NAME}"
         NFS_HOST = "nfs01.cssnr.com"
+        NFS_BASE = "/data/docker"
     }
     stages {
         stage('Init') {
@@ -30,6 +31,7 @@ pipeline {
                         "JOB_NAME:      ${JOB_NAME}\n" +
                         "SERVICE_NAME:  ${SERVICE_NAME}\n" +
                         "NFS_HOST:      ${NFS_HOST}\n" +
+                        "NFS_BASE:      ${NFS_BASE}\n" +
                         "BASE_NAME:     ${BASE_NAME}\n" +
                         "BUILD_CAUSE:   ${BUILD_CAUSE}\n" +
                         "GIT_BRANCH:    ${GIT_BRANCH}\n" +
@@ -46,7 +48,7 @@ pipeline {
             }
             environment {
                 STACK_NAME = "dev_${BASE_NAME}"
-                NFS_DIRECTORY = "${STACK_NAME}"
+                NFS_DIRECTORY = "${NFS_BASE}/${STACK_NAME}"
                 QBIT_PORT = "40101"
                 TRAEFIK_HOST = "plex-dev.cssnr.com"
             }
@@ -76,7 +78,7 @@ pipeline {
             }
             environment {
                 STACK_NAME = "prod_${BASE_NAME}"
-                NFS_DIRECTORY = "${STACK_NAME}"
+                NFS_DIRECTORY = "${NFS_BASE}/${STACK_NAME}"
                 QBIT_PORT = "40102"
                 TRAEFIK_HOST = "plex.cssnr.com"
             }
