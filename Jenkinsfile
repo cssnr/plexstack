@@ -50,7 +50,7 @@ pipeline {
                 STACK_NAME = "dev_${BASE_NAME}"
                 NFS_DIRECTORY = "${NFS_BASE}/${STACK_NAME}"
                 QBIT_PORT = "40101"
-                TRAEFIK_HOST = "plex-dev.cssnr.com"
+                TRAEFIK_HOST = "`plex-dev.cssnr.com`"
             }
             steps {
                 echo "\n--- Starting Dev Deploy ---\n" +
@@ -80,7 +80,7 @@ pipeline {
                 STACK_NAME = "prod_${BASE_NAME}"
                 NFS_DIRECTORY = "${NFS_BASE}/${STACK_NAME}"
                 QBIT_PORT = "40102"
-                TRAEFIK_HOST = "plex.cssnr.com"
+                TRAEFIK_HOST = "`plex.cssnr.com`"
             }
             steps {
                 echo "\n--- Starting Prod Deploy ---\n" +
