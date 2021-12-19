@@ -13,15 +13,14 @@ pipeline {
     environment {
         DISCORD_ID   = "smashed-alerts"
         COMPOSE_FILE = "docker-compose-swarm.yml"
+
         BUILD_CAUSE = getBuildCause()
-        VERSION  = getVersion("${GIT_BRANCH}")
-        GIT_ORG  = getGitGroup("${GIT_URL}")
+        VERSION = getVersion("${GIT_BRANCH}")
+        GIT_ORG = getGitGroup("${GIT_URL}")
         GIT_REPO = getGitRepo("${GIT_URL}")
-        NFS_HOST = getOvhNfsInfo('host')
-        NFS_ID   = getOvhNfsInfo('id')
-        NFS_BASE = "/export/ftpbackup/${NFS_ID}/docker/nfs"
-        BASE_NAME    = "${GIT_ORG}-${GIT_REPO}"
+        BASE_NAME = "${GIT_ORG}-${GIT_REPO}"
         SERVICE_NAME = "${BASE_NAME}"
+        NFS_HOST = "nfs01.cssnr.com"
     }
     stages {
         stage('Init') {
@@ -48,7 +47,7 @@ pipeline {
             }
             environment {
                 STACK_NAME = "dev_${BASE_NAME}"
-                NFS_DIRECTORY = "${NFS_BASE}/${STACK_NAME}"
+                NFS_DIRECTORY = "${STACK_NAME}"
                 QBIT_PORT = "40101"
                 TRAEFIK_HOST = "plex-dev.cssnr.com"
             }
@@ -60,11 +59,11 @@ pipeline {
                         "NFS_DIRECTORY: ${NFS_DIRECTORY}\n"
                 sendDiscord("${DISCORD_ID}", "Dev Deploy Started")
                 echo "Setting up NFS"
-                setupOvhNfs("${STACK_NAME}")
-                setupOvhNfs("${STACK_NAME}/download")
-                setupOvhNfs("${STACK_NAME}/plex")
-                setupOvhNfs("${STACK_NAME}/qbittorrent")
-                setupOvhNfs("${STACK_NAME}/media")
+                setupNfs("${STACK_NAME}")
+                setupNfs("${STACK_NAME}/download")
+                setupNfs("${STACK_NAME}/plex")
+                setupNfs("${STACK_NAME}/qbittorrent")
+                setupNfs("${STACK_NAME}/media")
                 echo "Stack Push"
                 updateCompose("${COMPOSE_FILE}", "STACK_NAME", "${STACK_NAME}")
                 stackPush("${COMPOSE_FILE}")
@@ -82,7 +81,7 @@ pipeline {
             }
             environment {
                 STACK_NAME = "prod_${BASE_NAME}"
-                NFS_DIRECTORY = "${NFS_BASE}/${STACK_NAME}"
+                NFS_DIRECTORY = "${STACK_NAME}"
                 QBIT_PORT = "40102"
                 TRAEFIK_HOST = "plex.cssnr.com"
             }
@@ -94,11 +93,11 @@ pipeline {
                         "NFS_DIRECTORY: ${NFS_DIRECTORY}\n"
                 sendDiscord("${DISCORD_ID}", "Prod Deploy Started")
                 echo "Setting up NFS"
-                setupOvhNfs("${STACK_NAME}")
-                setupOvhNfs("${STACK_NAME}/download")
-                setupOvhNfs("${STACK_NAME}/plex")
-                setupOvhNfs("${STACK_NAME}/qbittorrent")
-                setupOvhNfs("${STACK_NAME}/media")
+                setupNfs("${STACK_NAME}")
+                setupNfs("${STACK_NAME}/download")
+                setupNfs("${STACK_NAME}/plex")
+                setupNfs("${STACK_NAME}/qbittorrent")
+                setupNfs("${STACK_NAME}/media")
                 echo "Stack Push"
                 updateCompose("${COMPOSE_FILE}", "STACK_NAME", "${STACK_NAME}")
                 stackPush("${COMPOSE_FILE}")
