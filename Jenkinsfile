@@ -30,7 +30,6 @@ pipeline {
                         "JOB_NAME:      ${JOB_NAME}\n" +
                         "SERVICE_NAME:  ${SERVICE_NAME}\n" +
                         "NFS_HOST:      ${NFS_HOST}\n" +
-                        "NFS_BASE:      ${NFS_BASE}\n" +
                         "BASE_NAME:     ${BASE_NAME}\n" +
                         "BUILD_CAUSE:   ${BUILD_CAUSE}\n" +
                         "GIT_BRANCH:    ${GIT_BRANCH}\n" +
