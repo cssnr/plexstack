@@ -59,10 +59,6 @@ pipeline {
                 sendDiscord("${DISCORD_ID}", "Dev Deploy Started")
                 echo "Setting up NFS"
                 setupNfs("${STACK_NAME}")
-                setupNfs("${STACK_NAME}/download")
-                setupNfs("${STACK_NAME}/plex")
-                setupNfs("${STACK_NAME}/qbittorrent")
-                setupNfs("${STACK_NAME}/media")
                 echo "Stack Push"
                 updateCompose("${COMPOSE_FILE}", "STACK_NAME", "${STACK_NAME}")
                 stackPush("${COMPOSE_FILE}")
@@ -93,10 +89,6 @@ pipeline {
                 sendDiscord("${DISCORD_ID}", "Prod Deploy Started")
                 echo "Setting up NFS"
                 setupNfs("${STACK_NAME}")
-                setupNfs("${STACK_NAME}/download")
-                setupNfs("${STACK_NAME}/plex")
-                setupNfs("${STACK_NAME}/qbittorrent")
-                setupNfs("${STACK_NAME}/media")
                 echo "Stack Push"
                 updateCompose("${COMPOSE_FILE}", "STACK_NAME", "${STACK_NAME}")
                 stackPush("${COMPOSE_FILE}")
