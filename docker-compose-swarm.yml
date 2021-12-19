@@ -19,8 +19,8 @@ services:
         - "traefik.http.services.STACK_NAME.loadbalancer.server.port=80"
         - "traefik.http.services.STACK_NAME.loadbalancer.server.scheme=http"
     environment:
-      - PUID=1000
-      - PGID=1000
+#      - PUID=1000
+#      - PGID=1000
       - TZ=UTC
     volumes:
       - download_dir:/data/downloads
@@ -34,8 +34,8 @@ services:
   plex:
     image: linuxserver/plex:latest
     environment:
-      - PUID=1000
-      - PGID=1000
+#      - PUID=1000
+#      - PGID=1000
       - TZ=UTC
       - VERSION=docker
     volumes:
@@ -47,8 +47,8 @@ services:
   qbittorrent:
     image: linuxserver/qbittorrent:latest
     environment:
-      - PUID=1000
-      - PGID=1000
+#      - PUID=1000
+#      - PGID=1000
       - TZ=UTC
       - WEBUI_PORT=8080
     volumes:
