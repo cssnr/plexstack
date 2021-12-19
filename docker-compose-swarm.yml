@@ -40,7 +40,7 @@ services:
       - VERSION=docker
     volumes:
       - plex_dir:/config
-      - plex_media_dir:/media
+      - media_dir:/media
     networks:
       - internal-net
 
