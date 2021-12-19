@@ -1,0 +1,93 @@
+version: '3.9'
+
+services:
+  nginx:
+    build: ./nginx
+    image: registry.hosted-domains.com/shane/plexstack-nginx:${VERSION}
+    deploy:
+      mode: global
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-public"
+        - "traefik.constraint-label=traefik-public"
+        - "traefik.http.routers.STACK_NAME-http.rule=Host(${TRAEFIK_HOST})"
+        - "traefik.http.routers.STACK_NAME-http.entrypoints=http"
+        - "traefik.http.routers.STACK_NAME-http.middlewares=https-redirect"
+        - "traefik.http.routers.STACK_NAME-https.rule=Host(${TRAEFIK_HOST})"
+        - "traefik.http.routers.STACK_NAME-https.entrypoints=https"
+        - "traefik.http.routers.STACK_NAME-https.tls=true"
+        - "traefik.http.services.STACK_NAME.loadbalancer.server.port=80"
+        - "traefik.http.services.STACK_NAME.loadbalancer.server.scheme=http"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+    volumes:
+      - download_dir:/data/downloads
+    depends_on:
+      - plex
+      - qbittorrent
+    networks:
+      - internal-net
+      - traefik-public
+
+  plex:
+    image: linuxserver/plex:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+      - VERSION=docker
+    volumes:
+      - plex_dir:/config
+      - plex_media_dir:/media
+    networks:
+      - internal-net
+
+  qbittorrent:
+    image: linuxserver/qbittorrent:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+      - WEBUI_PORT=8080
+    volumes:
+      - qbit_dir:/config
+      - download_dir:/downloads
+    networks:
+      - internal-net
+    ports:
+      - "${QBIT_PORT}:6881"
+      - "${QBIT_PORT}:6881/udp"
+
+volumes:
+  download_dir:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: "addr=${NFS_HOST},rw"
+      device: ":${NFS_DIRECTORY}/download"
+  plex_dir:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: "addr=${NFS_HOST},rw"
+      device: ":${NFS_DIRECTORY}/plex"
+  qbit_dir:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: "addr=${NFS_HOST},rw"
+      device: ":${NFS_DIRECTORY}/qbittorrent"
+  media_dir:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: "addr=${NFS_HOST},rw"
+      device: ":${NFS_DIRECTORY}/media"
+
+networks:
+  internal-net:
+    driver: overlay
+  traefik-public:
+    external: true

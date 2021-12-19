@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+  nginx:
+    build: ./nginx
+    image: shane-plexstack-nginx:latest
+    deploy:
+      mode: global
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+    volumes:
+      - download_dir:/data/downloads
+    depends_on:
+      - plex
+      - qbittorrent
+    ports:
+      - "80:80"
+
+  plex:
+    image: linuxserver/plex:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+      - VERSION=docker
+    volumes:
+      - plex_dir:/config
+      - plex_media_dir:/media
+
+  qbittorrent:
+    image: linuxserver/qbittorrent:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+      - WEBUI_PORT=8080
+    volumes:
+      - qbit_dir:/config
+      - download_dir:/downloads
+    ports:
+      - "6881:6881"
+      - "6881:6881/udp"
+
+volumes:
+  qbit_dir:
+  download_dir:
+  plex_dir:
+  media_dir:

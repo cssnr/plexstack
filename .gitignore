@@ -1,0 +1,5 @@
+.idea/
+*.iml
+.coverage
+*.log
+settings.env
