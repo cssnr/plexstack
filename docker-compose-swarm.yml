@@ -23,13 +23,13 @@ services:
       - PGID=1000
       - TZ=UTC
     volumes:
-      - download_dir:/data/downloads
+      - media_dir:/data/downloads
     depends_on:
       - plex
       - qbittorrent
     networks:
-      - internal-net
       - traefik-public
+      - internal-net
 
   plex:
     image: linuxserver/plex:latest
@@ -56,6 +56,7 @@ services:
       - WEBUI_PORT=8080
     volumes:
       - qbit_dir:/config
+      - media_dir:/media
       - download_dir:/downloads
     networks:
       - internal-net
@@ -90,7 +91,7 @@ volumes:
       device: ":${NFS_DIRECTORY}/media"
 
 networks:
-  internal-net:
-    driver: overlay
   traefik-public:
     external: true
+  internal-net:
+    driver: overlay
