@@ -45,7 +45,7 @@ services:
     networks:
       - internal-net
     ports:
-      - "${PLEX_PORT}:${PLEX_PORT}"
+      - "${PLEX_PORT}:32400"
 
   qbittorrent:
     image: linuxserver/qbittorrent:latest
