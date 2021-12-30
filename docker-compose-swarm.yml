@@ -44,6 +44,8 @@ services:
       - media_dir:/media
     networks:
       - internal-net
+    ports:
+      - "${PLEX_PORT}:${PLEX_PORT}"
 
   qbittorrent:
     image: linuxserver/qbittorrent:latest
