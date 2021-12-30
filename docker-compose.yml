@@ -28,6 +28,8 @@ services:
     volumes:
       - plex_dir:/config
       - media_dir:/media
+    ports:
+      - "32400:32400"
 
   qbittorrent:
     image: linuxserver/qbittorrent:latest
