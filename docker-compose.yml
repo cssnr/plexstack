@@ -11,7 +11,7 @@ services:
       - PGID=1000
       - TZ=UTC
     volumes:
-      - download_dir:/data/downloads
+      - media_dir:/data/downloads
     depends_on:
       - plex
       - qbittorrent
@@ -40,6 +40,7 @@ services:
       - WEBUI_PORT=8080
     volumes:
       - qbit_dir:/config
+      - media_dir:/media
       - download_dir:/downloads
     ports:
       - "6881:6881"

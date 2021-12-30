@@ -57,6 +57,7 @@ pipeline {
                 echo "\n--- Starting Dev Deploy ---\n" +
                         "STACK_NAME:    ${STACK_NAME}\n" +
                         "QBIT_PORT:     ${QBIT_PORT}\n" +
+                        "PLEX_PORT:     ${PLEX_PORT}\n" +
                         "NFS_HOST:      ${NFS_HOST}\n" +
                         "NFS_DIRECTORY: ${NFS_DIRECTORY}\n"
                 sendDiscord("${DISCORD_ID}", "Dev Deploy Started")
@@ -88,6 +89,7 @@ pipeline {
                 echo "\n--- Starting Prod Deploy ---\n" +
                         "STACK_NAME:    ${STACK_NAME}\n" +
                         "QBIT_PORT:     ${QBIT_PORT}\n" +
+                        "PLEX_PORT:     ${PLEX_PORT}\n" +
                         "NFS_HOST:      ${NFS_HOST}\n" +
                         "NFS_DIRECTORY: ${NFS_DIRECTORY}\n"
                 sendDiscord("${DISCORD_ID}", "Prod Deploy Started")
