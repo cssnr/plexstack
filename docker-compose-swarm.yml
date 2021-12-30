@@ -31,11 +31,11 @@ services:
     networks:
       - traefik-public
       - internal-net
-    ports:
-      - "${PLEX_PORT}:80"
+#    ports:
+#      - "${PLEX_PORT}:80"
 
   plex:
-    image: linuxserver/plex:latest
+    image: plexinc/pms-docker:latest
     hostname: ${TRAEFIK_HOST}
     deploy:
       replicas: 1
@@ -52,6 +52,7 @@ services:
       - PGID=1000
       - TZ=UTC
       - VERSION=docker
+      - ADVERTISE_IP=https://${TRAEFIK_HOST}
     volumes:
       - plex_dir:/config
       - media_dir:/media
