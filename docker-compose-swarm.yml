@@ -52,7 +52,7 @@ services:
       - PGID=1000
       - TZ=UTC
       - VERSION=docker
-      - ADVERTISE_IP=https://${TRAEFIK_HOST}
+      - ADVERTISE_IP=https://${TRAEFIK_HOST}:443
     volumes:
       - plex_dir:/config
       - media_dir:/media
