@@ -40,8 +40,8 @@ services:
         - "traefik.enable=true"
         - "traefik.docker.network=traefik-public"
         - "traefik.constraint-label=traefik-public"
-        - "traefik.http.routers.STACK_NAME-http.entrypoints=http"
-        - "traefik.http.routers.STACK_NAME-http.entrypoints.address=:${PLEX_PORT}"
+        - "traefik.http.routers.STACK_NAME-plex.entrypoints=http"
+        - "traefik.http.routers.STACK_NAME-plex.entrypoints.address=:${PLEX_PORT}"
         - "traefik.http.services.STACK_NAME.loadbalancer.server.port=${PLEX_PORT}"
         - "traefik.http.services.STACK_NAME.loadbalancer.server.scheme=http"
     environment:
