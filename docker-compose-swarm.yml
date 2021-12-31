@@ -49,7 +49,7 @@ services:
 #        - "traefik.http.services.STACK_NAME.loadbalancer.server.scheme=http"
       resources:
         limits:
-          cpus: 2
+          cpus: '2'
           memory: 1gb
     environment:
       - PUID=1000
