@@ -24,6 +24,7 @@ services:
       - PGID=1000
       - TZ=UTC
     volumes:
+      - download_dir:/data/media
       - media_dir:/data/downloads
     depends_on:
       - plex
@@ -31,8 +32,8 @@ services:
     networks:
       - traefik-public
       - internal-net
-#    ports:
-#      - "${PLEX_PORT}:80"
+    ports:
+      - "${PLEX_PORT}:32400"
 
   plex:
     image: plexinc/pms-docker:latest
@@ -82,6 +83,14 @@ services:
     ports:
       - "${QBIT_PORT}:6881"
       - "${QBIT_PORT}:6881/udp"
+
+secrets:
+  cssnr.com.crt:
+    external: true
+  cssnr.com.key:
+    external: true
+  cssnr_basic_http_auth:
+    external: true
 
 volumes:
   download_dir:
