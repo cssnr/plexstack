@@ -26,6 +26,13 @@ services:
     volumes:
       - download_dir:/data/media
       - media_dir:/data/downloads
+    secrets:
+      - source: cssnr.com.crt
+        target: /etc/ssl/cssnr.com.crt
+      - source: cssnr.com.key
+        target: /etc/ssl/cssnr.com.key
+      - source: cssnr_basic_http_auth
+        target: /etc/nginx/auth.users
     depends_on:
       - plex
       - qbittorrent
