@@ -26,21 +26,21 @@ services:
     volumes:
       - download_dir:/data/media
       - media_dir:/data/downloads
-    secrets:
-      - source: cssnr.com.crt
-        target: /etc/ssl/cssnr.com.crt
-      - source: cssnr.com.key
-        target: /etc/ssl/cssnr.com.key
-      - source: cssnr_basic_http_auth
-        target: /etc/nginx/auth.users
+#    secrets:
+#      - source: cssnr.com.crt
+#        target: /etc/ssl/cssnr.com.crt
+#      - source: cssnr.com.key
+#        target: /etc/ssl/cssnr.com.key
+#      - source: cssnr_basic_http_auth
+#        target: /etc/nginx/auth.users
     depends_on:
       - plex
       - qbittorrent
     networks:
       - traefik-public
       - internal-net
-    ports:
-      - "${PLEX_PORT}:32400"
+#    ports:
+#      - "${PLEX_PORT}:32400"
 
   plex:
     image: plexinc/pms-docker:latest
@@ -91,13 +91,13 @@ services:
       - "${QBIT_PORT}:6881"
       - "${QBIT_PORT}:6881/udp"
 
-secrets:
-  cssnr.com.crt:
-    external: true
-  cssnr.com.key:
-    external: true
-  cssnr_basic_http_auth:
-    external: true
+#secrets:
+#  cssnr.com.crt:
+#    external: true
+#  cssnr.com.key:
+#    external: true
+#  cssnr_basic_http_auth:
+#    external: true
 
 volumes:
   download_dir:
