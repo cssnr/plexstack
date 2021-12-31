@@ -47,6 +47,10 @@ services:
 #        - "traefik.http.routers.STACK_NAME-plex.entrypoints.address=:${PLEX_PORT}"
 #        - "traefik.http.services.STACK_NAME.loadbalancer.server.port=${PLEX_PORT}"
 #        - "traefik.http.services.STACK_NAME.loadbalancer.server.scheme=http"
+      resources:
+        limits:
+          cpus: 2
+          memory: 1gb
     environment:
       - PUID=1000
       - PGID=1000
